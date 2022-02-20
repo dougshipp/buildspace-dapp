@@ -9,8 +9,8 @@ const main = async () => {
 
     console.log("Contract owner:", owner.address);
 
-    let greetingsCount;
-    greetingsCount = await greetingsContract.getTotalUpVotes();
+    let upVoteCount;
+    upVoteCount = await greetingsContract.getTotalUpVotes();
 
     let txn = await greetingsContract.upVote();
     await txn.wait();
@@ -18,7 +18,7 @@ const main = async () => {
     let upVoteTxn = await greetingsContract.connect(sender).upVote();
     await upVoteTxn.wait();
 
-    greetingsCount = await greetingsContract.getTotalUpVotes();
+    upVoteCount = await greetingsContract.getTotalUpVotes();
 };
 
 const runMain = async () => {
