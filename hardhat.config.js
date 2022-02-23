@@ -12,10 +12,16 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
-
+// Deployed contract address: 0xa1Cb298967b59308a4513AEAe071CA60CF5d4B8a
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  solidity: "0.8.0",
+  networks: {
+    rinkeby: {
+      url: "https://eth-rinkeby.alchemyapi.io/v2/JEijRVxvIlVwxPyw9XmM7fIP_2j3BqAM",
+      accounts: []
+    },
+  },
 };

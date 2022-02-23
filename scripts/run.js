@@ -5,20 +5,22 @@ const main = async () => {
     const greetingsContractFactory = await hre.ethers.getContractFactory("GreetingsPortal");
     const greetingsContract = await greetingsContractFactory.deploy();
     await greetingsContract.deployed();
-    console.log("Contract deployed to:", greetingsContract.address);
-
+    console.log("Contract address:", greetingsContract.address);
     console.log("Contract owner:", owner.address);
 
     let upVoteCount;
     upVoteCount = await greetingsContract.getTotalUpVotes();
+    console.log("upVotes: ", upVoteCount);
 
-    let txn = await greetingsContract.upVote();
+    let txn = await greetingsContract.upVote("How does it look?");
     await txn.wait();
 
-    let upVoteTxn = await greetingsContract.connect(sender).upVote();
+    const [_, randomPerson] = await hre.ethers.getSigners();
+    let upVoteTxn = await greetingsContract.connect(randomPerson).upVote("Looks rare");
     await upVoteTxn.wait();
 
-    upVoteCount = await greetingsContract.getTotalUpVotes();
+    let allUpVotes = await greetingsContract.getAllUpVotes();
+    console.log(allUpVotes);
 };
 
 const runMain = async () => {

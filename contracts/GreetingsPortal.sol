@@ -7,13 +7,32 @@ import "hardhat/console.sol";
 contract GreetingsPortal {
     uint256 totalUpVotes;
 
-    constructor() {
-        console.log("I want ETH");
+    event NewUpVote(address indexed from, uint256 timestamp, string message);
+
+    struct Upvote {
+        address sender;
+        string message;
+        uint256 timestamp;
     }
 
-    function upVote() public {
+    Upvote[] upVotes;
+
+    constructor() {
+        console.log("Feed me ETH");
+    }
+
+    function upVote(string memory _message) public {
         totalUpVotes += 1;
-        console.log("%s likes your work!", msg.sender);
+        console.log("%s likes your work!", msg.sender, _message);
+
+        // Push data to array
+        upVotes.push(Upvote(msg.sender, _message, block.timestamp));
+
+        emit NewUpVote(msg.sender, block.timestamp,  _message);
+    }
+
+    function getAllUpVotes() public view returns (Upvote[] memory) {
+        return upVotes;
     }
 
     function getTotalUpVotes() public view returns (uint256) {
